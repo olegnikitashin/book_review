@@ -4,8 +4,11 @@
   </div>
   <div class="col-md-8">
     <h1><%= @book.title %></h1>
-    <p><%= simple_format(@book.description) %></p>
     <h4><%= @book.author %></h4>
+    <h3>Average Rating:</h3>
+    <div class="star-rating" data-score="<%= @avg_review %>"></div>
+    <span>Based on <%= pluralize(@book.reviews.count, "review") %></span>
+    <p><%= simple_format(@book.description) %></p>
     <h5><%= @book.user.email %></h5>
   </div>
 </div>
