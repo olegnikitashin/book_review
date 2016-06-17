@@ -2,6 +2,7 @@
 <p><%= @book.description %></p>
 <h4><%= @book.author %></h4>
 <h5><%= @book.user.email %></h5>
+<p>Category: <%= @book.category.name %></p>
 
 <%= link_to 'Back', root_path %>
 
