@@ -1,1 +1,8 @@
 <h1>Hello!</h1>
+
+<% @books.each do |book| %>
+  <h2><%= link_to book.title, book %></h2>
+  <h4><%= book.author %></h4>
+<% end %>
+
+<%= link_to 'New Book', new_book_path %>

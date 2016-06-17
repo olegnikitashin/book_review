@@ -1,0 +1,7 @@
+<h1><%= @book.title %></h1>
+<p><%= @book.description %></p>
+<h4><%= @book.author %></h4>
+
+<%= link_to 'Back', root_path %>
+<%= link_to 'Edit', edit_book_path(@book) %>
+<%= link_to 'Delete', book_path(@book), method: :delete, data: { confirm: "Are you sure you want to delete the book?" } %>
