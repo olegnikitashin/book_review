@@ -1,11 +1,15 @@
 <h1 class="current-category"><%= params[:category] %></h1>
-
 <% if @books.blank? %>
   <h2>There are no books currently in this category</h2>
 <% else %>
+  <div class="row">
     <h3><%= pluralize(@books.count, "book") %> total</h3>
-  <% @books.each do |book| %>
-    <h2><%= link_to book.title, book %></h2>
-    <h4><%= book.author %></h4>
-  <% end %>
+    <% @books.each do |book| %>
+      <div class="col-md-3">
+        <h2><%= link_to book.title, book %></h2>
+        <%= link_to (image_tag book.image.url(:book_index), class: "book"), book %>
+        <h4><%= book.author %></h4>
+      </div>
+    <% end %>
+  </div>
 <% end %>

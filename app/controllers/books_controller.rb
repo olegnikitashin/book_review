@@ -1,5 +1,7 @@
 class BooksController < ApplicationController
   before_action :find_book, only: [:show, :edit, :update, :destroy]
+  before_action :book_owner, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     if params[:category].blank?
@@ -45,10 +47,17 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :description, :author, :category_id)
+    params.require(:book).permit(:title, :description, :author, :category_id, :image)
   end
 
   def find_book
     @book = Book.find(params[:id])
+  end
+
+  def book_owner
+    unless @book.user_id == current_user.id
+      flash[:notice] = 'Only owners can edit their Books'
+      redirect_to root_path
+    end
   end
 end
