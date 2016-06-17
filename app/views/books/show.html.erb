@@ -4,7 +4,7 @@
   </div>
   <div class="col-md-8">
     <h1><%= @book.title %></h1>
-    <p><%= @book.description %></p>
+    <p><%= simple_format(@book.description) %></p>
     <h4><%= @book.author %></h4>
     <h5><%= @book.user.email %></h5>
   </div>
@@ -12,6 +12,27 @@
 
 <div class="row">
   <div class="col-md-4">
+
+    <div>
+      <%= render 'reviews/form' %>
+    </div>
+
+    <% if @reviews.blank? %>
+      <h4>No reviews just yet, would you like to add the first?</h4>
+    <% else %>
+      <% @reviews.each do |review| %>
+        <div class="reviews">
+          <div class="star-rating"><%= review.rating %></div>
+          <p><%= review.comment %></p>
+          <p><%= time_ago_in_words(review.created_at) %></p>
+        </div>
+      <% end %>
+    <% end %>
+
+    <div>
+      <%= link_to 'Add Review', new_book_review_path(@book) %>
+    </div>
+
   </div>
 </div>
 <%= link_to 'Back', root_path %>
