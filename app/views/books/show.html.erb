@@ -13,18 +13,18 @@
 <div class="row">
   <div class="col-md-4">
 
-    <div>
-      <%= render 'reviews/form' %>
-    </div>
-
     <% if @reviews.blank? %>
       <h4>No reviews just yet, would you like to add the first?</h4>
     <% else %>
       <% @reviews.each do |review| %>
         <div class="reviews">
-          <div class="star-rating"><%= review.rating %></div>
+          <div class="star-rating" data-score=<%= review.rating %> ></div>
           <p><%= review.comment %></p>
           <p><%= time_ago_in_words(review.created_at) %></p>
+            <% if user_signed_in? && (current_user.id == review.user_id) %>
+              <%= link_to 'Edit', edit_book_review_path(review.book, review) %>
+              <%= link_to 'Delete', book_review_path(review.book, review), method: :delete, data: { confirm: "Are you sure?" } %>
+            <% end %>
         </div>
       <% end %>
     <% end %>
@@ -41,3 +41,13 @@
   <%= link_to 'Edit', edit_book_path(@book) %>
   <%= link_to 'Delete', book_path(@book), method: :delete, data: { confirm: "Are you sure you want to delete the book?" } %>
 <% end %>
+
+<script>
+  $('.star-rating').raty({
+    path: '/assets/',
+    readOnly: true,
+    score: function() {
+      return $(this).attr('data-score');
+    }
+  });
+</script>
